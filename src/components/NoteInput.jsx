@@ -8,7 +8,7 @@ class NoteInput extends Component {
         title: "",
         body: "",
       },
-      limitTitle: 50,
+      titleLimit: 50,
     };
     this.onTitleChangeEventHandler = this.onTitleChangeEventHandler.bind(this);
     this.onBodyChangeEventHandler = this.onBodyChangeEventHandler.bind(this);
@@ -17,16 +17,18 @@ class NoteInput extends Component {
   onTitleChangeEventHandler(event) {
     const limit = 50;
     const title = event.target.value.slice(0, limit);
-
+    console.log(title);
     this.setState((prevState) => {
+      console.log({ ...prevState.note, title });
       return {
         note: { ...prevState.note, title },
-        limitTitle: limit - title.length,
+        titleLimit: limit - title.length,
       };
     });
   }
   onBodyChangeEventHandler(event) {
     this.setState((prevState) => {
+      console.log({ ...prevState.note, body: event.target.value });
       return { note: { ...prevState.note, body: event.target.value } };
     });
   }
@@ -36,28 +38,26 @@ class NoteInput extends Component {
   }
   render() {
     return (
-      <div className="note-input">
-        <h2>Create Note</h2>
-        <form onSubmit={this.onSubmitEventHandler}>
-          <p className="note-input__title__char-limit">
-            {this.state.limitTitle} character left
-          </p>
-          <input
-            type="text"
-            className="note-input__title"
-            placeholder="This is title ..."
-            onChange={this.onTitleChangeEventHandler}
-            value={this.state.title}
-            required
-          />
-          <textarea
-            className="note-input__body"
-            placeholder="Write your note here ..."
-            onChange={this.onBodyChangeEventHandler}
-          ></textarea>
-          <button type="submit">Create</button>
-        </form>
-      </div>
+      <form onSubmit={this.onSubmitEventHandler}>
+        <p className="note-input__title__char-limit">
+          {this.state.titleLimit} character left
+        </p>
+        <input
+          type="text"
+          className="note-input__title"
+          placeholder="This is title ..."
+          onChange={this.onTitleChangeEventHandler}
+          value={this.state.note.title}
+          required
+        />
+        <textarea
+          className="note-input__body"
+          placeholder="Write your note here ..."
+          onChange={this.onBodyChangeEventHandler}
+          value={this.state.note.body}
+        ></textarea>
+        <button type="submit">Create</button>
+      </form>
     );
   }
 }
