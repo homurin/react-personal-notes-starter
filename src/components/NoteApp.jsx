@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import NoteAppHeader from "./NoteAppHeader";
 import NoteInput from "./NoteInput";
-import NoteList from "./NoteList";
+import NoteListBody from "./NoteListBody";
 import { getInitialData } from "../utils";
 
 class NoteApp extends Component {
@@ -54,7 +54,7 @@ class NoteApp extends Component {
         <NoteAppHeader onSearch={this.onSearchNoteHandler} />
         <div className="note-app__body">
           <NoteInput addNote={this.onAddNoteHandler} />
-          <NoteList
+          <NoteListBody
             notes={this.state.notes}
             keyword={this.state.keyword}
             onDelete={this.onDeleteNoteHandler}
